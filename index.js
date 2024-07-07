@@ -3,17 +3,16 @@ import Bomb from "./js/Bomb.js";
 
 const difficulties = {
   easy: {
-    dimensions: 20,
-    // bombs: 70,
-    bombs: 1,
+    dimensions: 8,
+    bombs: 10,
   },
   medium: {
-    dimensions: 35,
-    bombs: 140,
+    dimensions: 16,
+    bombs: 40,
   },
   hard: {
-    dimensions: 50,
-    bombs: 300,
+    dimensions: 30,
+    bombs: 150,
   },
 };
 let selectedDifficulty;

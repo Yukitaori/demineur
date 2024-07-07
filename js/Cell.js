@@ -7,6 +7,7 @@ class Cell {
     this.isBomb = false;
     this.isFlagged = false;
     this.grid = grid;
+    this.isChecked = false;
   }
 
   getEmptyCell() {
@@ -32,16 +33,18 @@ class Cell {
       } else {
         this.explode();
       }
+      this.checkGrid();
     });
     button.addEventListener("auxclick", () => {
-      console.log("flag");
       this.flag();
+      this.checkGrid();
     });
     return button;
   }
 
   checkIfCellEmpty(array) {
     let checkedCells = array ? array : [];
+    this.isChecked = true;
     if (this.bombsNear > 0) {
       return (this.cellDiv.innerText = this.bombsNear);
     }
@@ -49,6 +52,7 @@ class Cell {
       checkedCells.push(this);
       this.cellDiv.classList.add("emptyCell");
       this.cellDiv.innerText = "";
+      this.isFlagged = false;
       for (let nearCell of this.nearCells) {
         nearCell.checkIfCellEmpty(checkedCells);
       }
@@ -85,6 +89,19 @@ class Cell {
         } else {
           if (cell != this) this.nearCells.push(cell);
         }
+      }
+    }
+  }
+
+  checkGrid() {
+    // S'il ne reste plus dans la grille de bombe non signalée => Gagné
+    if (!this.grid.cells.find((cell) => cell.isBomb && !cell.isFlagged)) {
+      console.log("C'est la win");
+    } else {
+      if (this.grid.cells.find((cell) => !cell.isBomb && !cell.isChecked)) {
+        console.log("Pas encore gagné");
+      } else {
+        console.log("C'est la win");
       }
     }
   }
