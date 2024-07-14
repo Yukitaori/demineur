@@ -26,6 +26,7 @@ class Bomb extends Cell {
   explode() {
     const bombCell = this.getCell();
     bombCell.classList.add("bomb");
+    this.lose();
   }
 
   getNearCells() {

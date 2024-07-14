@@ -3,18 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Démineur</title>
+    <title>MINESWEEPER</title>
     <link rel="stylesheet" href="style.css"></link>
   </head>
   <body>
-    <label for="difficulty">Sélectionne ta difficulté</label>
-    <select name="difficulty" id="difficulty">
-      <option default value="null">Choix</option>
-      <option value="easy">Facile</option>
-      <option value="medium">Normal</option>
-      <option value="hard">Difficile</option>
-    </select>
-    <table id="gameGrid"></table>
+    <header>
+      <h1>Minesweeper</h1>
+    </header>
+    <main id="main">
+      <div id="newGameDiv">
+        <label for="difficulty">Select difficulty : </label>
+        <select name="difficulty" id="difficulty" defaultValue="null">
+          <option default value="null">Difficulty</option>
+          <option value="easy">Easy</option>
+          <option value="medium">Normal</option>
+          <option value="hard">Difficult</option>
+        </select>
+        <button id="newGameButton">Let's go</button>
+        <button class="info" id="info">Info</button>
+      </div>
+      <table id="gameGrid"></table>
+      <div id="controlDiv" class="hidden">
+        <button id="resetButton">
+          Reset
+        </button>
+      </div>
+    </main>
   </body>
   <!-- <script type="module" src="js/Cell.js"></script> -->
   <script type="module" src="index.js"></script>

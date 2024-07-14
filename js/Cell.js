@@ -1,3 +1,5 @@
+import { newGame, alertModal } from "./functions.js";
+
 class Cell {
   constructor(x, y, grid) {
     this.x = x;
@@ -27,11 +29,14 @@ class Cell {
 
   createButton() {
     const button = document.createElement("button");
+    button.classList.add("cellButton");
     button.addEventListener("click", () => {
       if (!this.isBomb) {
         this.checkIfCellEmpty();
       } else {
-        this.explode();
+        if (!this.isFlagged) {
+          this.explode();
+        }
       }
       this.checkGrid();
     });
@@ -54,7 +59,9 @@ class Cell {
       this.cellDiv.innerText = "";
       this.isFlagged = false;
       for (let nearCell of this.nearCells) {
-        nearCell.checkIfCellEmpty(checkedCells);
+        if (nearCell.x === this.x || nearCell.y === this.y) {
+          nearCell.checkIfCellEmpty(checkedCells);
+        }
       }
     }
   }
@@ -96,14 +103,24 @@ class Cell {
   checkGrid() {
     // S'il ne reste plus dans la grille de bombe non signalée => Gagné
     if (!this.grid.cells.find((cell) => cell.isBomb && !cell.isFlagged)) {
-      console.log("C'est la win");
+      this.win();
     } else {
       if (this.grid.cells.find((cell) => !cell.isBomb && !cell.isChecked)) {
-        console.log("Pas encore gagné");
+        return;
       } else {
-        console.log("C'est la win");
+        this.win();
       }
     }
+  }
+
+  lose() {
+    alertModal("You lose !", "Whatevs");
+    newGame();
+  }
+
+  win() {
+    alertModal("You win !", "Cool");
+    newGame();
   }
 }
 
