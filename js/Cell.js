@@ -31,14 +31,14 @@ class Cell {
     const button = document.createElement("button");
     button.classList.add("cellButton");
     button.addEventListener("click", () => {
-      if (!this.isBomb) {
-        this.checkIfCellEmpty();
-      } else {
-        if (!this.isFlagged) {
+      if (!this.isFlagged) {
+        if (!this.isBomb) {
+          this.checkIfCellEmpty();
+        } else {
           this.explode();
         }
+        this.checkGrid();
       }
-      this.checkGrid();
     });
     button.addEventListener("auxclick", () => {
       this.flag();
@@ -61,6 +61,10 @@ class Cell {
       for (let nearCell of this.nearCells) {
         if (nearCell.x === this.x || nearCell.y === this.y) {
           nearCell.checkIfCellEmpty(checkedCells);
+        } else {
+          if (nearCell.bombsNear > 0) {
+            nearCell.cellDiv.innerText = nearCell.bombsNear;
+          }
         }
       }
     }
